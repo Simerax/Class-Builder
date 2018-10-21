@@ -4,9 +4,36 @@ our $VERSION = '0.00.10';
 
 use Hash::Util qw(lock_value unlock_value);
 
-use Exporter qw(import);
-our @EXPORT = ();
-our @EXPORT_OK = qw(has);
+
+use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+BEGIN {
+    require Exporter;
+    @ISA = qw(Exporter);
+    @EXPORT = ();
+    @EXPORT_OK = qw(has);
+
+
+    %EXPORT_TAGS = (
+        CONSTANTS => [
+            qw(
+                RW
+                RO
+            )
+        ]
+    );
+
+    Exporter::export_ok_tags(
+        qw(
+            CONSTANTS
+        )
+    );
+}
+
+use constant {
+    RW => 'rw',
+    RO => 'ro',
+};
+
 
 use strict;
 
@@ -22,7 +49,7 @@ sub has {
     my $is_rw = $attribute->{'is'};
 
 
-    # Sicherstellen, dass es einen gültigen Accessor Namen gibt
+    # Make sure there is a valid Accessor name
     if (!$attribute_name) {
         use Carp;
         croak "Attributes are required to have a name. Set 'var' in your Attribute Definition.";
