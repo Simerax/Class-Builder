@@ -1,3 +1,139 @@
+=head1 NAME
+
+Class::Builder - A small Package to make setting up a Class in Perl easier and less tedious.
+
+=head1 SYNOPSIS
+
+    package MyClass;
+
+    use Class::Builder qw(has :CONSTANTS);
+
+    # Create a new Attribute for MyClass with the Name 'abc'
+    has {
+        var => 'abc',
+        is => RW,   # its ReadWrite
+
+        # we only want values that are greater 0
+        constraint => sub {
+            my $value = shift;
+            if ($value > 0) {
+                return $value;
+            } else {
+                return undef;
+            }
+        }
+    };
+
+    # ...
+
+    use MyClass;
+
+    my $instance = MyClass->new({
+        abc => 25,
+    });
+
+    $instance->abc(19);
+
+=head1 DESCRIPTION
+
+This Package creates Setters & Getters for your Class Attributes as well as a 'new' Method automatically.
+Your Class is also being forced to use the Setters & Getters. Direct access like C<$self-E<gt>{a} = 5> is not possible.
+Your Class Attributes are locked via L<Hash::Util>'s 'lock_value' and can only be manipulated with the appropriate Setter.
+
+=head2 Functions
+
+=head3 has({})
+
+This Function is the core of this Module.
+Everything is done within this Function, except for custom Constructors (but those are only used if there is at least one C<has>).
+
+=head4 Parameters
+
+=over 4
+
+=item var
+
+Mandatory Key. This specifies the Name of your attribute.
+
+=item is
+
+Type of your Attribute. Will default to C<READ_WRITE> if not given.
+
+=item constraint
+
+Here you can specify custom validation of your values when they are being set (or tried to being set).
+This needs to be a Code-Reference.
+
+=back
+
+=head2 Custom Constructor
+
+If you have at least created one Attribute via C<has>, L<Class::Builder> will call the Function C<__construct> inside the Package it was used.
+This Function gets the unlocked Class Instance C<$self> as Parameter. You can freely manipulate your Object inside this Method. 
+
+    package MyClass;
+
+    use Class::Builder qw(has);
+
+    has {
+        var => 'abc',
+    };
+
+    sub __construct {
+        my ($self) = @_;
+
+        $self->{'abc'} = 50; # totally legal here you can bypass the Setter if you want.
+    }
+
+=head2 Exports
+
+Nothing is exported by L<Class::Builder> by default. You have to import whatever you need by yourself. 
+This is because most functions/Constants in this module are very short and there is a great chance of overlapping.
+
+
+
+=head3 Functions
+
+The Function you will use in every Project is C<has>. You will usally import it like so:
+
+    use Class::Builder qw(has);
+
+=head3 Constants
+
+You can import Attribute Type Constants
+
+    use Class::Builder qw(:CONSTANTS);
+
+These will give you
+
+
+=over 2
+
+=item RO and READ_ONLY
+
+Read-Only Attribute Type
+
+    has {
+        var 'a',
+        is => READ_ONLY # or short RO
+    };
+
+=item RW and READ_WRITE
+
+Read & Write Attribute Type
+
+    has {
+        var 'a',
+        is => READ_WRITE # or short RW
+    };
+
+=back
+
+=cut
+
+
+
+
 package Class::Builder;
 
 our $VERSION = '0.00.10';
@@ -17,7 +153,9 @@ BEGIN {
         CONSTANTS => [
             qw(
                 RW
+                READ_WRITE
                 RO
+                READ_ONLY
             )
         ]
     );
@@ -31,7 +169,9 @@ BEGIN {
 
 use constant {
     RW => 'rw',
+    READ_WRITE => RW,
     RO => 'ro',
+    READ_ONLY => RO,
 };
 
 

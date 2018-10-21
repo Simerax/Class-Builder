@@ -14,7 +14,7 @@ has {
 
 has {
     var => 'b',
-    is => RO,
+    is => READ_ONLY,
 };
 
 
