@@ -1,0 +1,19 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Class::Builder	lib/Class/Builder.pm	1;"	p
+Class::Builder::_constructor	lib/Class/Builder.pm	102;"	s
+Class::Builder::_lock_all_values	lib/Class/Builder.pm	160;"	s
+Class::Builder::_ro_accessor	lib/Class/Builder.pm	90;"	s
+Class::Builder::_rw_accessor	lib/Class/Builder.pm	67;"	s
+Class::Builder::_unlock_all_values	lib/Class/Builder.pm	150;"	s
+Class::Builder::has	lib/Class/Builder.pm	17;"	s
+_constructor	lib/Class/Builder.pm	102;"	s
+_lock_all_values	lib/Class/Builder.pm	160;"	s
+_ro_accessor	lib/Class/Builder.pm	90;"	s
+_rw_accessor	lib/Class/Builder.pm	67;"	s
+_unlock_all_values	lib/Class/Builder.pm	150;"	s
+has	lib/Class/Builder.pm	17;"	s
