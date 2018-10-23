@@ -9,7 +9,15 @@ It makes your Class Object 'Read Only' and only unlocks it if you change values 
 
 ## 1.1 How to create an Attribute?
 
+### Minimal Example
+    package MyClass;
+    use Class::Builder qw(has);
+    
+    has {
+        var => 'MyAttribute'
+    };
 
+### Extended Example
     package MyClass;
 
     use Class::Builder qw(has);
@@ -28,7 +36,7 @@ It makes your Class Object 'Read Only' and only unlocks it if you change values 
             } else {
                 return undef; # Otherwise we give undef to indicate that we dont want to change the value and keep the old one
             }
-        };
+        }
     };
 
 ## 1.2 Automatic Constructor?
