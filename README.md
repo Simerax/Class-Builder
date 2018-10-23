@@ -54,14 +54,18 @@ After the Initalization of the given Attributes, it will check for a '__construc
 
     # the constructor will only be added if you have an attribute
     has {
-        # ...
+        var => 'MyAttribute'
     };
 
 
     sub __construct {
-        my ($self) = @_; # All Attributes Initalized & blessed
+        my ($self) = @_; # All Attributes Initalized & $self is blessed
 
         # do more important initialization
+        
+        # A special thing about __construct is that you have the unlocked hash!
+        # Direct manipulation of $self is only possible inside this method.
+        $self->{'MyAttribute'} = 'Value'; 
     }
 
 
